@@ -1,0 +1,30 @@
+[package]
+name = "oicana-example-axum"
+description = "Example application using the Oicana Rust integration for PDF templating"
+version = "0.1.0"
+edition = "2024"
+repository = "https://github.com/oicana/oicana-example-axum"
+license = "MIT"
+
+[dependencies]
+oicana = { version = "0.1.0-alpha.5" }
+oicana_files = { version = "0.1.0-alpha.5" }
+oicana_input = { version = "0.1.0-alpha.5" }
+oicana_world = { version = "0.1.0-alpha.5" }
+oicana_export = { version = "0.1.0-alpha.5", features = ["png"] }
+
+axum = { version = "0.8.4", features = ["macros", "multipart"] }
+tokio = {version = "1", features = ["full"]}
+tokio-util = {version = "0.7.15", features = ["io"]}
+tower = "0.5.2"
+tower-http = {version = "0.6.6", features = ["trace", "timeout", "cors", "compression-full", "decompression-full"]}
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+dashmap = "6.1.0"
+anyhow = "1.0.100"
+serde = { version = "1.0.225", features = ["derive"] }
+uuid = { version = "1.11.0", features = ["v4", "serde"] }
+utoipa = {version = "5.4.0", features= ["axum_extras", "uuid"] }
+utoipa-axum = {version = "0.2.0"}
+utoipa-swagger-ui = {version = "9.0.2", features= ["axum"] }
+serde_json = "1.0.145"
