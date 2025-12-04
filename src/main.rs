@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use axum::http::Response;
+use axum::http::{Response, StatusCode};
 use shutdown::shutdown_signal;
 use tower_http::{
     compression::CompressionLayer,
@@ -64,7 +64,10 @@ async fn main() {
                     tracing::info!("Request to took: {:?}", latency);
                 }),
         )
-        .layer(TimeoutLayer::new(Duration::from_secs(1)))
+        .layer(TimeoutLayer::with_status_code(
+            StatusCode::REQUEST_TIMEOUT,
+            Duration::from_secs(1),
+        ))
         .layer(RequestDecompressionLayer::new())
         .layer(CompressionLayer::new())
         .split_for_parts();

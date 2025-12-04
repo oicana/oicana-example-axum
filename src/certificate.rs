@@ -147,8 +147,12 @@ async fn create_certificate(
         .compile(inputs)
         .map_err(CertificateError::CompilationFailure)?;
 
-    let pdf = export_merged_pdf(&compilation_result.document, &*template)
-        .map_err(CertificateError::ExportFailure)?;
+    let pdf = export_merged_pdf(
+        &compilation_result.document,
+        &*template,
+        &template.manifest().tool.oicana.export.pdf.standards,
+    )
+    .map_err(CertificateError::ExportFailure)?;
 
     let body = Body::from(pdf);
 

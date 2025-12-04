@@ -27,6 +27,7 @@ use uuid::Uuid;
 use crate::blob::{BlobStorage, get_blob};
 
 const TEMPLATES: &[(&str, &str)] = &[
+    ("accessibility", "0.1.0"),
     ("certificate", "0.1.0"),
     ("dependency", "0.1.0"),
     ("fonts", "0.1.0"),
@@ -218,7 +219,11 @@ async fn compile_template(
         Err(error) => return Err(TemplateError::CompilationFailure { id, error }),
     };
 
-    let pdf = match export_merged_pdf(&compilation_result.document, &*template) {
+    let pdf = match export_merged_pdf(
+        &compilation_result.document,
+        &*template,
+        &template.manifest().tool.oicana.export.pdf.standards,
+    ) {
         Ok(pdf) => pdf,
         Err(error) => return Err(TemplateError::ExportFailure { id, error }),
     };
